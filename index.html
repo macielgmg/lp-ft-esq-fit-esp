@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#c43c17">
+  <title>AulaPronta — Crea cuadernos didácticos visuales en minutos</title>
+  <meta name="description" content="La app que crea cuadernos didácticos visuales, ilustrados y listos para imprimir. La oferta termina hoy.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand: #c43c17;
+      --brand-dark: #9a2c10;
+      --brand-deep: #7a210c;
+      --ink: #14141f;
+      --muted: #4b4b5c;
+      --highlight: #f7c7a4;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      font-family: Poppins, system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(118deg, #fff6e8 0%, #f7f4ee 42%, #eef7f4 100%);
+    }
+
+    .urgency {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--brand);
+      color: #fff;
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      box-shadow: 0 8px 20px rgba(196, 60, 23, 0.22);
+    }
+
+    .urgency-date {
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .hero {
+      width: min(720px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 36px 0 48px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #d8d8e2;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    .badge svg { flex-shrink: 0; }
+
+    h1 {
+      font-size: clamp(28px, 7.2vw, 44px);
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -0.03em;
+      max-width: 18ch;
+      margin: 0 auto 16px;
+    }
+
+    .mark {
+      background: var(--highlight);
+      border-radius: 6px;
+      padding: 0 6px 1px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
+    .subtitle {
+      max-width: 38ch;
+      margin: 0 auto 28px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.55;
+    }
+
+    .hero-photo {
+      width: min(300px, 78%);
+      margin: 8px auto 28px;
+      overflow: hidden;
+      border-radius: 28px;
+      background: #111118;
+      border: 6px solid #1a1a24;
+      box-shadow: 0 22px 50px rgba(20, 20, 31, 0.16);
+    }
+
+    .hero-photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: min(360px, 100%);
+      background: var(--brand);
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 16px 24px;
+      border-radius: 999px;
+      box-shadow: 0 10px 24px rgba(196, 60, 23, 0.25);
+    }
+
+    .cta:hover { background: var(--brand-dark); }
+    .cta:active { background: var(--brand-deep); }
+
+    .micro {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    footer {
+      text-align: center;
+      color: #8a8a99;
+      font-size: 12px;
+      padding: 0 16px 28px;
+    }
+
+    .examples {
+      background: #fff;
+      border-top: 1px solid #ece8e4;
+      border-bottom: 1px solid #ece8e4;
+      padding: 48px 0 52px;
+      overflow: hidden;
+    }
+
+    .examples-head {
+      width: min(720px, calc(100% - 36px));
+      margin: 0 auto 28px;
+      text-align: center;
+    }
+
+    .examples-head h2 {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+
+    .examples-head p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .marquee {
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .marquee:last-child { margin-bottom: 0; }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      gap: 16px;
+      animation: marquee 40s linear infinite;
+    }
+
+    .marquee--reverse .marquee-track {
+      animation-duration: 48s;
+      animation-direction: reverse;
+    }
+
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .ex-card {
+      position: relative;
+      flex: 0 0 auto;
+      width: min(60vw, 240px);
+      height: calc(min(60vw, 240px) * 1.5);
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 12px 28px rgba(20, 20, 31, 0.12);
+    }
+
+    .ex-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+
+    .ex-card span {
+      position: absolute;
+      inset: 0 0 auto;
+      height: 6px;
+    }
+
+    .ex-card p {
+      position: absolute;
+      inset: auto 0 0;
+      padding: 28px 12px 12px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .marquee-track { animation: none; }
+    }
+
+    .ideal {
+      padding: 52px 20px 56px;
+      background: linear-gradient(180deg, #fffaf4 0%, #fff 100%);
+    }
+
+    .ideal-head {
+      width: min(640px, 100%);
+      margin: 0 auto 32px;
+      text-align: center;
+    }
+
+    .ideal-head h2 {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+
+    .ideal-head p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .ideal-grid {
+      width: min(920px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .ideal-card {
+      background: #fff;
+      border: 1px solid #ece8e4;
+      border-radius: 18px;
+      padding: 20px 18px 18px;
+    }
+
+    .ideal-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #fff1e8;
+      color: var(--brand);
+      display: grid;
+      place-items: center;
+      margin-bottom: 12px;
+    }
+
+    .ideal-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .ideal-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    @media (min-width: 640px) {
+      .ideal-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+    }
+
+    @media (min-width: 900px) {
+      .ideal-grid { grid-template-columns: 1fr 1fr 1fr; }
+    }
+
+    .how {
+      background: #fff;
+      border-top: 1px solid #ece8e4;
+      padding: 52px 20px 56px;
+    }
+
+    .how-head {
+      width: min(640px, 100%);
+      margin: 0 auto 32px;
+      text-align: center;
+    }
+
+    .how-kicker {
+      display: inline-block;
+      color: var(--brand);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .how-head h2 {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+
+    .how-head p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .how-steps {
+      width: min(920px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 14px;
+      list-style: none;
+    }
+
+    .how-step {
+      background: #fff;
+      border: 1px solid #ece8e4;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .how-photo {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      background: #f3ebe4;
+    }
+
+    .how-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .how-num {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--brand);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 6px 16px rgba(196, 60, 23, 0.28);
+    }
+
+    .how-step h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 14px 16px 6px;
+    }
+
+    .how-step p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 0 16px 16px;
+    }
+
+    @media (min-width: 720px) {
+      .how-steps { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (min-width: 980px) {
+      .how-steps { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    }
+
+    .receive {
+      background: linear-gradient(180deg, #fffaf4 0%, #fff 100%);
+      border-top: 1px solid #ece8e4;
+      padding: 52px 20px 56px;
+    }
+
+    .receive-head {
+      width: min(640px, 100%);
+      margin: 0 auto 28px;
+      text-align: center;
+    }
+
+    .receive-head h2 {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+
+    .receive-head p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .receive-list {
+      width: min(640px, 100%);
+      margin: 0 auto;
+      list-style: none;
+      background: #fff;
+      border: 1px solid #ece8e4;
+      border-radius: 20px;
+      padding: 8px 10px;
+    }
+
+    .receive-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 12px;
+      border-bottom: 1px solid #f3ece6;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .receive-list li:last-child { border-bottom: 0; }
+
+    .receive-list svg {
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: var(--brand);
+    }
+
+    .identity {
+      background: linear-gradient(180deg, #fffaf4 0%, #fff 100%);
+      border-top: 1px solid #ece8e4;
+      padding: 52px 20px 56px;
+    }
+
+    .identity-head {
+      width: min(640px, 100%);
+      margin: 0 auto 28px;
+      text-align: center;
+    }
+
+    .identity-kicker {
+      display: inline-block;
+      color: var(--brand);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .identity-head h2 {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+
+    .identity-head p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .identity-show {
+      width: min(640px, 100%);
+      margin: 0 auto;
+    }
+
+    .identity-photo {
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 16px 36px rgba(20, 20, 31, 0.12);
+      background: #f3ebe4;
+    }
+
+    .identity-photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .identity-tags {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .identity-tags li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: #fff;
+      border: 1px solid #ece8e4;
+      border-radius: 16px;
+      padding: 14px 14px 12px;
+      text-align: left;
+    }
+
+    .identity-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #fff1e8;
+      color: var(--brand);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .identity-tags h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .identity-tags p {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.45;
+    }
+
+    @media (min-width: 520px) {
+      .identity-tags { grid-template-columns: 1fr 1fr; }
+    }
+
+    .offer {
+      background: #fff;
+      border-top: 1px solid #ece8e4;
+      padding: 52px 20px 56px;
+    }
+
+    .offer-box {
+      width: min(520px, 100%);
+      margin: 0 auto;
+      background: #fff;
+      border: 1px solid #ece8e4;
+      border-radius: 20px;
+      padding: 28px 20px 24px;
+      text-align: center;
+      scroll-margin-top: 56px;
+    }
+
+    .offer-kicker {
+      display: inline-block;
+      color: var(--brand);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .offer-box h2 {
+      font-size: clamp(22px, 5vw, 30px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .offer-was {
+      margin-bottom: 2px;
+      color: #8a8a99;
+      font-family: Oswald, Poppins, sans-serif;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .offer-was del {
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0;
+    }
+
+    .offer-amount {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      color: var(--brand);
+      font-family: Oswald, Poppins, sans-serif;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      line-height: 0.82;
+    }
+
+    .offer-rs {
+      font-size: 18px;
+      font-weight: 500;
+      margin-top: 14px;
+      margin-right: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    .offer-value {
+      font-size: clamp(64px, 18vw, 88px);
+      letter-spacing: -0.02em;
+    }
+
+    .offer-cents {
+      font-size: 26px;
+      font-weight: 600;
+      margin-top: 10px;
+      letter-spacing: 0.01em;
+    }
+
+    .offer-once {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .offer-spots {
+      color: var(--brand);
+      font-weight: 700;
+    }
+
+    .offer-list {
+      list-style: none;
+      text-align: left;
+      margin: 22px 0 24px;
+      padding: 4px 4px 0;
+      border-top: 1px solid #f3ece6;
+    }
+
+    .offer-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 11px 4px;
+      border-bottom: 1px solid #f3ece6;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .offer-list li:last-child { border-bottom: 0; }
+
+    .offer-list svg {
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: var(--brand);
+    }
+
+    .offer .cta {
+      width: 100%;
+      min-width: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .guarantee {
+      background: #fff;
+      border-top: 1px solid #ece8e4;
+      padding: 52px 20px 56px;
+    }
+
+    .guarantee-box {
+      width: min(640px, 100%);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      text-align: center;
+    }
+
+    .guarantee-seal {
+      width: 160px;
+      height: 160px;
+      flex-shrink: 0;
+      object-fit: contain;
+      display: block;
+    }
+
+    .guarantee-box h2 {
+      font-size: clamp(24px, 5vw, 32px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .guarantee-box p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+      max-width: 42ch;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 640px) {
+      .guarantee-box {
+        flex-direction: row;
+        text-align: left;
+        gap: 28px;
+      }
+
+      .guarantee-box p { margin: 0; }
+    }
+
+    .faq {
+      background: linear-gradient(180deg, #fffaf4 0%, #fff 100%);
+      border-top: 1px solid #ece8e4;
+      padding: 52px 20px 56px;
+    }
+
+    .faq-head {
+      width: min(640px, 100%);
+      margin: 0 auto 28px;
+      text-align: center;
+    }
+
+    .faq-head h2 {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+
+    .faq-list {
+      width: min(640px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 10px;
+    }
+
+    .faq-item {
+      background: #fff;
+      border: 1px solid #ece8e4;
+      border-radius: 18px;
+    }
+
+    .faq-item summary {
+      cursor: pointer;
+      list-style: none;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .faq-item summary::-webkit-details-marker { display: none; }
+
+    .faq-item summary::after {
+      content: "+";
+      flex-shrink: 0;
+      color: var(--brand);
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .faq-item[open] summary::after { content: "–"; }
+
+    .faq-item p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+      padding: 0 18px 16px;
+    }
+  </style>
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1341972344676869');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1341972344676869&ev=PageView&noscript=1"
+    alt=""></noscript>
+  <!-- End Meta Pixel Code -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "yba7ksitkf");
+  </script>
+</head>
+<body>
+  <div class="urgency">
+    La oferta termina hoy — <span class="urgency-date" id="offer-date">hoy</span>
+  </div>
+
+  <main>
+  <section class="hero">
+    <p class="badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="#e6b325" d="M12 2.2 13.7 8l6.1 1.2-4.6 4.3 1.4 6.1L12 16.7 7.4 19.6l1.4-6.1L4.2 9.2 10.3 8 12 2.2Z"/>
+      </svg>
+      AulaPronta
+    </p>
+
+    <h1>Crea cuadernos didácticos <span class="mark">visuales</span> en minutos</h1>
+
+    <p class="subtitle">
+      Material ilustrado, organizado y listo para el aula. Sin Canva, sin Word y sin pasarte la noche maquetando.
+    </p>
+
+    <div class="hero-photo">
+      <img
+        src="imagens/hero/app-home.png"
+        alt="Pantalla de inicio de AulaPronta en el celular, con el botón para crear un cuaderno didáctico"
+        width="1024"
+        height="1820"
+      >
+    </div>
+
+    <a class="cta" href="#oferta">Quiero crear mis cuadernos ahora</a>
+    <p class="micro">Acceso inmediato · Oferta válida solo hoy</p>
+  </section>
+
+  <section class="examples" aria-labelledby="examples-title">
+    <div class="examples-head">
+      <h2 id="examples-title">Mira lo que puedes crear</h2>
+      <p>Cuadernos visuales de cualquier materia — ilustrados y listos para imprimir.</p>
+    </div>
+    <div class="marquee" data-row="0"></div>
+    <div class="marquee marquee--reverse" data-row="1"></div>
+  </section>
+
+  <section class="ideal" aria-labelledby="ideal-title">
+    <div class="ideal-head">
+      <h2 id="ideal-title">Ideal para ti que...</h2>
+      <p>Quieres cuadernos visuales listos, sin convertir el fin de semana en jornada laboral.</p>
+    </div>
+    <div class="ideal-grid">
+      <article class="ideal-card">
+        <div class="ideal-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        </div>
+        <h3>Ya perdiste horas maquetando</h3>
+        <p>Armar un cuaderno visual en Canva se come la noche. Aquí el material sale ilustrado y organizado.</p>
+      </article>
+      <article class="ideal-card">
+        <div class="ideal-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7V3h8v4"/><path d="M5 7h14v14H5z"/><path d="M9 12h6M9 16h4"/></svg>
+        </div>
+        <h3>Necesitas el cuaderno para mañana</h3>
+        <p>Creas el cuaderno visual del tema de la clase e imprimes. Sin buscar figuras en grupos de WhatsApp.</p>
+      </article>
+      <article class="ideal-card">
+        <div class="ideal-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20"/><path d="M20 2H8.5A2.5 2.5 0 0 0 6 4.5v15"/><path d="M8 7h8M8 11h6"/></svg>
+        </div>
+        <h3>Das clase de más de una materia</h3>
+        <p>Lengua, matemáticas, ciencias, historia — un cuaderno visual para el tema que vayas a trabajar.</p>
+      </article>
+      <article class="ideal-card">
+        <div class="ideal-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6"/><path d="M6 18h12v3H6z"/><path d="M6 14h12v4H6z"/><path d="M6 9h12v5H6z"/></svg>
+        </div>
+        <h3>Quieres imprimir y llevar</h3>
+        <p>El cuaderno ya viene paginado para el aula. Sin ajustes y sin sorpresas en la impresora de la escuela.</p>
+      </article>
+      <article class="ideal-card">
+        <div class="ideal-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.2 4.6 5 .7-3.6 3.5.9 5.1L12 14.8 7.5 16.9l.9-5.1L4.8 8.3l5-.7L12 3z"/></svg>
+        </div>
+        <h3>No sabes de diseño</h3>
+        <p>No necesitas plantilla ni ilustración. El cuaderno ya nace visual para que el alumno siga.</p>
+      </article>
+      <article class="ideal-card">
+        <div class="ideal-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Atiendes varios grupos</h3>
+        <p>Un cuaderno para 5.º, otro para 7.º, otro para 9.º. Todo en el nivel correcto del grupo.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="how" aria-labelledby="how-title">
+    <div class="how-head">
+      <span class="how-kicker">Cómo funciona</span>
+      <h2 id="how-title">Del tema al cuaderno listo</h2>
+      <p>Cuatro pasos. Sin instalación, sin curso y sin quedarte maquetando.</p>
+    </div>
+    <ol class="how-steps">
+      <li class="how-step">
+        <div class="how-photo">
+          <img src="imagens/passos/passo-1-escolher.png" alt="Manos en la tablet tocando crear cuaderno visual en AulaPronta" width="800" height="800">
+          <span class="how-num">1</span>
+        </div>
+        <h3>Toca en crear cuaderno</h3>
+        <p>Abre AulaPronta y empieza un cuaderno didáctico visual. Un toque y la app ya entra en el flujo.</p>
+      </li>
+      <li class="how-step">
+        <div class="how-photo">
+          <img src="imagens/passos/passo-2-preencher.png" alt="Manos en la tablet indicando materia, tema y grado del cuaderno" width="800" height="800">
+          <span class="how-num">2</span>
+        </div>
+        <h3>Indica materia, tema y grado</h3>
+        <p>Ejemplo: sistema solar, 5.º grado. Escribes lo esencial — el resto lo ilustra AulaPronta.</p>
+      </li>
+      <li class="how-step">
+        <div class="how-photo">
+          <img src="imagens/passos/passo-3-gerar-outra.png" alt="Tablet con el cuaderno generado y el botón para generar otra página" width="800" height="800">
+          <span class="how-num">3</span>
+        </div>
+        <h3>¿No te gustó? Genera otra</h3>
+        <p>Si una página no quedó como querías, pide generar de nuevo. Al momento, sin recomenzar el cuaderno.</p>
+      </li>
+      <li class="how-step">
+        <div class="how-photo">
+          <img src="imagens/passos/passo-4-baixar-imprimir.png" alt="Tablet con botones de descargar PDF e imprimir junto a las páginas impresas" width="800" height="800">
+          <span class="how-num">4</span>
+        </div>
+        <h3>Descarga e imprime</h3>
+        <p>Listo. Solo descarga el PDF e imprime. Sin ajustar márgenes y sin maquetar.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="receive" aria-labelledby="receive-title">
+    <div class="receive-head">
+      <h2 id="receive-title">Todo lo que vas a recibir</h2>
+      <p>Acceso completo para crear cuadernos didácticos visuales siempre que lo necesites.</p>
+    </div>
+    <ul class="receive-list">
+      <li>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.8 2.8L16 9.5"/></svg>
+        Acceso inmediato a AulaPronta
+      </li>
+      <li>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.8 2.8L16 9.5"/></svg>
+        Creación de cuadernos didácticos visuales
+      </li>
+      <li>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.8 2.8L16 9.5"/></svg>
+        Cualquier materia y cualquier grado escolar
+      </li>
+      <li>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.8 2.8L16 9.5"/></svg>
+        Cuadernos ilustrados, listos para imprimir
+      </li>
+      <li>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.8 2.8L16 9.5"/></svg>
+        Acceso completo, sin mensualidad
+      </li>
+      <li>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.8 2.8L16 9.5"/></svg>
+        Actualizaciones futuras incluidas
+      </li>
+      <li>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.8 2.8L16 9.5"/></svg>
+        Soporte para dudas
+      </li>
+    </ul>
+  </section>
+
+  <section class="identity" aria-labelledby="identity-title">
+    <div class="identity-head">
+      <span class="identity-kicker">Identidad visual</span>
+      <h2 id="identity-title">Como tú quieras</h2>
+      <p>Personaliza cada cuaderno con tu marca. Si quieres, incluye la foto en los apuntes.</p>
+    </div>
+    <div class="identity-show">
+      <div class="identity-photo">
+        <img src="imagens/identidade/identidade-visual.png" alt="Cuaderno didáctico visual con logo, nombre y foto de la profesora en la portada y en las páginas internas" width="1024" height="1024" loading="lazy">
+      </div>
+      <ul class="identity-tags">
+        <li>
+          <span class="identity-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="3"/><path d="M3 9h3M18 9h3"/></svg>
+          </span>
+          <div>
+            <h3>Tu logo</h3>
+            <p>Entra en la portada de cada cuaderno que generes.</p>
+          </div>
+        </li>
+        <li>
+          <span class="identity-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 19c1.4-3 3.7-4.5 6.5-4.5S17.1 16 18.5 19"/></svg>
+          </span>
+          <div>
+            <h3>Tu nombre</h3>
+            <p>El alumno ve quién preparó el material.</p>
+          </div>
+        </li>
+        <li>
+          <span class="identity-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/><circle cx="12" cy="12" r="3"/></svg>
+          </span>
+          <div>
+            <h3>Tus colores</h3>
+            <p>Paleta como tú quieras.</p>
+          </div>
+        </li>
+        <li>
+          <span class="identity-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="m21 16-4.5-4.5L8 20"/></svg>
+          </span>
+          <div>
+            <h3>Tu foto</h3>
+            <p>Opcional — entra en el cuaderno solo si tú quieres.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="offer" aria-labelledby="offer-title">
+    <div class="offer-box" id="oferta">
+      <span class="offer-kicker">Oferta de lanzamiento</span>
+      <h2 id="offer-title">Acceso completo a AulaPronta</h2>
+      <p class="offer-was"><del>US$ 47,00</del></p>
+      <p class="offer-amount">
+        <span class="offer-rs">US$</span>
+        <span class="offer-value">11</span>
+        <span class="offer-cents">,90</span>
+      </p>
+      <p class="offer-once">Pago único · sin mensualidad · <span class="offer-spots">quedan pocos cupos</span></p>
+      <ul class="offer-list">
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.8 2.8L16 9.5"/></svg>
+          Acceso inmediato a AulaPronta
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.8 2.8L16 9.5"/></svg>
+          Cuadernos visuales ilimitados, cualquier materia
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.8 2.8L16 9.5"/></svg>
+          Acceso completo, sin mensualidad
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.8 2.8L16 9.5"/></svg>
+          Actualizaciones futuras incluidas
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.8 2.8L16 9.5"/></svg>
+          Pack de actividades de refuerzo
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.8 2.8L16 9.5"/></svg>
+          Pack de fechas conmemorativas del año
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.8 2.8L16 9.5"/></svg>
+          Guiones de clase de 50 minutos
+        </li>
+      </ul>
+      <a class="cta" href="#oferta">Quiero acceso ahora</a>
+      <p class="micro">Pago único · Acceso inmediato</p>
+    </div>
+  </section>
+
+  <section class="guarantee" aria-labelledby="guarantee-title">
+    <div class="guarantee-box">
+      <img
+        class="guarantee-seal"
+        src="imagens/identidade/selo-garantia-7-dias.png"
+        alt="Sello de garantía de 7 días"
+        width="700"
+        height="700"
+      >
+      <div>
+        <h2 id="guarantee-title">7 días de garantía</h2>
+        <p>Prueba AulaPronta sin riesgo. Si no es para ti, pide el reembolso en hasta 7 días — sin letra pequeña.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" aria-labelledby="faq-title">
+    <div class="faq-head">
+      <h2 id="faq-title">Preguntas frecuentes</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>¿Cómo recibo el acceso?</summary>
+        <p>En cuanto se confirma el pago, el acceso a AulaPronta se libera al momento. Ya puedes crear el primer cuaderno.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Funciona en el celular?</summary>
+        <p>Sí. AulaPronta abre en el navegador del celular, tablet o computadora. Sin instalar nada.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Necesito Canva o Word?</summary>
+        <p>No. Escribes materia, tema y grado. La app ilustra y organiza el cuaderno listo para imprimir.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Es una mensualidad?</summary>
+        <p>No. Son US$ 11,90 una sola vez. Acceso completo, sin cobro cada mes.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Sirve para cualquier materia y grado?</summary>
+        <p>Sí. Lengua, matemáticas, ciencias, historia — de primaria a lo que vayas a trabajar. El cuaderno sale en el nivel del grupo.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿El cuaderno sale listo para imprimir?</summary>
+        <p>Sí. Descargas en PDF e imprimes. Sin ajustar márgenes y sin maquetar.</p>
+      </details>
+    </div>
+  </section>
+  </main>
+
+  <footer>© <span id="year"></span> AulaPronta</footer>
+
+  <script>
+    (function () {
+      var hoje = new Date();
+      var data = hoje.toLocaleDateString("es", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+      var dateEl = document.getElementById("offer-date");
+      var yearEl = document.getElementById("year");
+      if (dateEl) dateEl.textContent = data;
+      if (yearEl) yearEl.textContent = String(hoje.getFullYear());
+
+      var itens = [
+        ["caderno-ciclo-del-agua.png", "Cuaderno visual — Ciclo del agua", "#0284c7", "#0f766e"],
+        ["caderno-fracciones.png", "Cuaderno visual — Fracciones", "#0d9488", "#2563eb"],
+        ["caderno-celula-animal.png", "Cuaderno visual — Célula animal", "#db2777", "#7c3aed"],
+        ["caderno-clases-gramaticales.png", "Cuaderno visual — Clases gramaticales", "#7c3aed", "#6366f1"],
+        ["caderno-egipto-antiguo.png", "Cuaderno visual — Egipto antiguo", "#d97706", "#b45309"],
+        ["caderno-estructura-atomo.png", "Cuaderno visual — Estructura del átomo", "#7c3aed", "#4338ca"],
+        ["caderno-fotosintesis.png", "Cuaderno visual — Fotosíntesis", "#16a34a", "#65a30d"],
+        ["caderno-fuentes-energia.png", "Cuaderno visual — Fuentes de energía", "#ea580c", "#ca8a04"],
+        ["caderno-mitosis.png", "Cuaderno visual — Mitosis", "#db2777", "#be185d"],
+        ["caderno-sistema-respiratorio.png", "Cuaderno visual — Sistema respiratorio", "#0891b2", "#0284c7"],
+        ["caderno-volcanes.png", "Cuaderno visual — Volcanes", "#dc2626", "#ea580c"],
+        ["caderno-genetica.png", "Cuaderno visual — Genética", "#15803d", "#65a30d"],
+        ["caderno-leyes-newton.png", "Cuaderno visual — Leyes de Newton", "#2563eb", "#4f46e5"],
+        ["caderno-tipos-fracciones.png", "Cuaderno visual — Tipos de fracciones", "#0f766e", "#2563eb"],
+        ["caderno-dna-genes.png", "Cuaderno visual — ADN y genes", "#7c3aed", "#db2777"],
+        ["caderno-primera-ley-newton.png", "Cuaderno visual — Primera ley de Newton", "#1d4ed8", "#334155"]
+      ];
+
+      function card(item) {
+        return (
+          '<article class="ex-card">' +
+            '<span style="background:linear-gradient(90deg,' + item[2] + ',' + item[3] + ')"></span>' +
+            '<img src="imagens/cadernos/' + item[0] + '" alt="' + item[1] + '" loading="lazy">' +
+            '<p>' + item[1] + '</p>' +
+          '</article>'
+        );
+      }
+
+      function preencher(seletor, lista) {
+        var el = document.querySelector(seletor);
+        if (!el) return;
+        var html = lista.map(card).join("") + lista.map(card).join("");
+        el.innerHTML = '<div class="marquee-track">' + html + '</div>';
+      }
+
+      var filaA = itens.filter(function (_, i) { return i % 2 === 0; });
+      var filaB = itens.filter(function (_, i) { return i % 2 === 1; });
+      preencher('[data-row="0"]', filaA);
+      preencher('[data-row="1"]', filaB);
+
+      var CHECKOUT = "";
+      var ADS_KEY = "aula_pronta_ads_es";
+
+      function coletarParamsAnuncio() {
+        var atuais = new URLSearchParams(window.location.search);
+        var salvos = {};
+        try {
+          salvos = JSON.parse(sessionStorage.getItem(ADS_KEY) || "{}") || {};
+        } catch (e) {
+          salvos = {};
+        }
+
+        atuais.forEach(function (valor, chave) {
+          if (valor) salvos[chave] = valor;
+        });
+
+        try {
+          sessionStorage.setItem(ADS_KEY, JSON.stringify(salvos));
+        } catch (e) {}
+
+        return salvos;
+      }
+
+      function urlCheckout() {
+        if (!CHECKOUT) return "#oferta";
+        var url = new URL(CHECKOUT);
+        var params = coletarParamsAnuncio();
+        Object.keys(params).forEach(function (chave) {
+          url.searchParams.set(chave, params[chave]);
+        });
+        return url.toString();
+      }
+
+      function ligarCheckout() {
+        var destino = urlCheckout();
+        document.querySelectorAll("a.cta").forEach(function (link) {
+          link.href = destino;
+          link.addEventListener("click", function () {
+            link.href = urlCheckout();
+          });
+        });
+      }
+
+      ligarCheckout();
+
+      var viewContentDisparado = false;
+
+      function dispararViewContent() {
+        if (viewContentDisparado) return;
+        viewContentDisparado = true;
+        if (typeof fbq !== "function") return;
+        fbq("track", "ViewContent", {
+          content_name: "AulaPronta — Cuadernos Didácticos Visuales",
+          content_ids: ["aulapronta-cadernos-es"],
+          content_type: "product",
+          value: 11.90,
+          currency: "USD"
+        });
+      }
+
+      function observarCtasComprar() {
+        var ctas = document.querySelectorAll("a.cta");
+        if (!ctas.length) return;
+
+        if (!("IntersectionObserver" in window)) {
+          dispararViewContent();
+          return;
+        }
+
+        var observer = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (!entries[i].isIntersecting) continue;
+            dispararViewContent();
+            observer.disconnect();
+            break;
+          }
+        }, { threshold: 0.5 });
+
+        ctas.forEach(function (cta) {
+          observer.observe(cta);
+        });
+      }
+
+      observarCtasComprar();
+    })();
+  </script>
+</body>
+</html>
