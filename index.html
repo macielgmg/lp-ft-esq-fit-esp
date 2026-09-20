@@ -101,20 +101,23 @@
       line-height: 1.55;
     }
 
-    .hero-photo {
-      width: min(300px, 78%);
+    .hero-video {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
       margin: 8px auto 28px;
       overflow: hidden;
-      border-radius: 28px;
+      border-radius: 18px;
       background: #111118;
-      border: 6px solid #1a1a24;
       box-shadow: 0 22px 50px rgba(20, 20, 31, 0.16);
     }
 
-    .hero-photo img {
-      display: block;
+    .hero-video iframe {
+      border: 0;
+      position: absolute;
+      inset: 0;
       width: 100%;
-      height: auto;
+      height: 100%;
     }
 
     .cta {
@@ -854,13 +857,14 @@
       Material ilustrado, organizado y listo para el aula. Sin Canva, sin Word y sin pasarte la noche maquetando.
     </p>
 
-    <div class="hero-photo">
-      <img
-        src="imagens/hero/app-home.png"
-        alt="Pantalla de inicio de ClaseLista en el celular, con el botón para crear un cuaderno didáctico"
-        width="720"
-        height="1280"
-      >
+    <div class="hero-video">
+      <iframe
+        loading="lazy"
+        title="Vídeo de presentación de ClaseLista"
+        src="https://play.gumlet.io/embed/6aaf25967d44d89d015d11e9"
+        referrerpolicy="origin"
+        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen; clipboard-write">
+      </iframe>
     </div>
 
     <a class="cta" href="#oferta">Quiero crear mis cuadernos ahora</a>
